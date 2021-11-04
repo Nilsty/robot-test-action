@@ -32,7 +32,6 @@ jobs:
         uses: joonvena/robotframework-docker-action@v1.0
         with:
           robot_options: "-v URL:${{ env.URL }} -v TEXT:${{ env.TEXT }}"
-          robot_reports_dir: ${{ github.workspace }}/reports
       - name: Upload test results
         uses: actions/upload-artifact@v1
         if: always()
