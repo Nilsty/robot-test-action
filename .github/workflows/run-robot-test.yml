@@ -1,0 +1,32 @@
+name: Run Robot Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "Which URL to check"
+        required: false
+        default: "warning"
+      text:
+        description: "Which text to check on the URL"
+        required: false
+        default: "warning"
+env:
+  URL: ${{ github.event.inputs.url }}
+  TEXT: ${{ github.event.inputs.text }}
+
+jobs:
+  printInputs:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "This test will check if the text ${{ env.TEXT }} is present on ${{ env.URL }}"
+
+  robot_test:
+    runs-on: ubuntu-latest
+    name: Run Robot Framework Tests
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Robot Framework
+        uses: joonvena/robotframework-docker-action@v1.0
