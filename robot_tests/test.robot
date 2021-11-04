@@ -12,6 +12,8 @@ ${TEXT}  DuckDuckGo
 
 *** Test Cases ***
 Run Page Check
+    [Documentation]  This test will check if a certain text 
+    ...  can be found on a certain page.
     Check if ${URL} contains ${TEXT}
 
 *** Keywords ***
