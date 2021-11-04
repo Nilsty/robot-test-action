@@ -6,11 +6,11 @@ on:
       url:
         description: "Which URL to check"
         required: false
-        default: "warning"
+        default: "https://duckduckgo.com/"
       text:
         description: "Which text to check on the URL"
         required: false
-        default: "warning"
+        default: "DuckDuckGo"
 env:
   URL: ${{ github.event.inputs.url }}
   TEXT: ${{ github.event.inputs.text }}
