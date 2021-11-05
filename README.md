@@ -56,3 +56,5 @@ From this URL you will be able to download the zipped test report.
 ## Further information
 
 If you need to customize any of the Github Actions API requests, please refer to their [REST API reference](https://docs.github.com/en/rest/reference/actions).
+
+This setup is using the github action [joonvena/robotframework-docker-action@v1.0](https://github.com/joonvena/robotframework-docker-action). Which is utelizing the [ppodgorsek/docker-robot-framework docker image](https://github.com/ppodgorsek/docker-robot-framework)
