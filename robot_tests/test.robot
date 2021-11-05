@@ -19,7 +19,6 @@ Run Page Check
 *** Keywords ***
 Check if ${URL} contains ${TEXT}
     Log  Check if ${URL} contains "${TEXT}"  console=True
-    Start Headless Browser
     Wait Until Page Contains Element  //*[contains(text(),'${TEXT}')]
 
 Start Headless Browser
