@@ -14,6 +14,7 @@ curl --request POST 'https://api.github.com/repos/nilsty/robot-test-action/actio
 --data-raw '{
     "ref": "main",
     "inputs": {
+        "run-id": "your workflow run identifier"
         "url": "https://robotframework.org/",
         "text": "Robot Framework"
     }
@@ -22,6 +23,12 @@ curl --request POST 'https://api.github.com/repos/nilsty/robot-test-action/actio
 
 The URL and text string are definded as input parameters for the github actions workflow.
 [The Authorization for this request can be done via Basic Auth. The user is the Github user name and the password needs to be a Personal Access Token.](https://docs.github.com/en/rest/overview/other-authentication-methods#via-oauth-and-personal-access-tokens)
+
+## Verify that you fetch the right test run
+
+Based on the submitted `run-id` in your POST request to start the test run, you can identify the workflow run in Github.
+
+The concept of the workflow run identifier is explained [here](https://stackoverflow.com/questions/69479400/get-run-id-after-triggering-a-github-workflow-dispatch-event).
 
 ## Check the test run status
 
@@ -35,6 +42,18 @@ Output:
 
 ```
 "completed"
+```
+
+## Check if a test run was successful or has failed
+
+```
+curl --request GET 'https://api.github.com/repos/nilsty/robot-test-action/actions/runs' | jq '.workflow_runs[0].conclusion'
+```
+
+Output:
+
+```
+"success" / "failure"
 ```
 
 ## Retrieve the test report
