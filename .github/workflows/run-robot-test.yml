@@ -3,6 +3,9 @@ name: Run Robot Test
 on:
   workflow_dispatch:
     inputs:
+      run-id:
+        description: "workflow run identifier"
+        required: false
       url:
         description: "Which URL to check"
         required: false
@@ -12,6 +15,7 @@ on:
         required: false
         default: "DuckDuckGo"
 env:
+  RUN_ID: ${{ github.event.inputs.run-id }}
   URL: ${{ github.event.inputs.url }}
   TEXT: ${{ github.event.inputs.text }}
 
@@ -20,11 +24,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo "This test will check if the text ${{ env.TEXT }} is present on ${{ env.URL }}"
+          echo "This test run with ID: ${{ env.RUN_ID }} will check if the text ${{ env.TEXT }} is present on ${{ env.URL }}"
 
   robot_test:
     runs-on: ubuntu-latest
-    name: Run Robot Framework Tests
+    name: ${{github.event.inputs.run-id}}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
