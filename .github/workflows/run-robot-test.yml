@@ -27,7 +27,9 @@ jobs:
           export GITTAG=1.1.1 \
           export IMAGENAME=${{ env.IMAGE_NAME }} \
           export REGISTRY=ghcr.io/test \
-          export BRANCH=main
+          export BRANCH=main \
+          echo $BRANCH \
+          echo $IMAGENAME
 
       - name: Send Image Notification
         uses: fjogeleit/http-request-action@v1
