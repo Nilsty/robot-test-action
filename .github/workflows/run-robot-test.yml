@@ -37,8 +37,8 @@ jobs:
           bearerToken: ${{ env.HUMANITEC_TOKEN }}
           data: |
             {
-              "branch": "'${BRANCH}'",
-              "commit": "'${GITSHA}'",
-              "image": "'${REGISTRY}'/'${IMAGENAME}':'${GITTAG}'",
-              "tags": ["'${GITTAG}'"],
+              "branch": "'$BRANCH'",
+              "commit": "'$GITSHA'",
+              "image": "'$REGISTRY'/'$IMAGENAME':'$GITTAG}'",
+              "tags": ["'$GITTAG'"],
             }
