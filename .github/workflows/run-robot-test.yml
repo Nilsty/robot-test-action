@@ -35,7 +35,7 @@ jobs:
           url: "https://api.humanitec.io/orgs/${{ env.HUMANITEC_ORG }}/images/$IMAGENAME/builds"
           method: "POST"
           bearerToken: ${{ env.HUMANITEC_TOKEN }}
-          data: |
+          data: >
             {
               "branch": "$BRANCH",
               "commit": "$GITSHA",
