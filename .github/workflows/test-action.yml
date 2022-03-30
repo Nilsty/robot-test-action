@@ -1,4 +1,4 @@
-name: Run Robot Test
+name: My Test Action
 
 on:
   workflow_dispatch:
