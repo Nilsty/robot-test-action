@@ -3,42 +3,42 @@ name: Run Robot Test
 on:
   workflow_dispatch:
     inputs:
-      run-id:
-        description: "workflow run identifier"
-        required: false
-      url:
-        description: "Which URL to check"
-        required: false
-        default: "https://duckduckgo.com/"
-      text:
-        description: "Which text to check on the URL"
-        required: false
-        default: "DuckDuckGo"
+      hum-token:
+        description: "Humanitec Token"
+        required: true
+      hum-org:
+        description: "Humanitec Org"
+        required: true
+      image-name:
+        description: "Image Name"
+        required: true
+
 env:
-  RUN_ID: ${{ github.event.inputs.run-id }}
-  URL: ${{ github.event.inputs.url }}
-  TEXT: ${{ github.event.inputs.text }}
+  HUMANITEC_TOKEN: ${{ github.event.inputs.hum-token }}
+  HUMANITEC_ORG: ${{ github.event.inputs.hum-org }}
+  IMAGE_NAME: ${{ github.event.inputs.image-name }}
 
 jobs:
-  printInputs:
+  notify-humanitec:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo "This test run with ID: ${{ env.RUN_ID }} will check if the text ${{ env.TEXT }} is present on ${{ env.URL }}"
+          export GITSHA=1234567 \
+          export GITTAG=1.1.1 \
+          export IMAGENAME=${{ env.IMAGE_NAME }} \
+          export REGISTRY=ghcr.io/test \
+          export BRANCH=main
 
-  robot_test:
-    runs-on: ubuntu-latest
-    name: ${{github.event.inputs.run-id}}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Robot Framework
-        uses: joonvena/robotframework-docker-action@v1.0
+      - name: Send Image Notification
+        uses: fjogeleit/http-request-action@v1
         with:
-          robot_options: "-v URL:${{ env.URL }} -v TEXT:${{ env.TEXT }}"
-      - name: Upload test results
-        uses: actions/upload-artifact@v1
-        if: always()
-        with:
-          name: reports
-          path: ${{ github.workspace }}/reports
+          url: "https://api.humanitec.io/orgs/${{ env.HUMANITEC_ORG }}/images/${IMAGENAME}/builds"
+          method: "POST"
+          bearerToken: ${{ env.HUMANITEC_TOKEN }}
+          data: |
+            {
+              "branch": "'${BRANCH}'",
+              "commit": "'${GITSHA}'",
+              "image": "'${REGISTRY}'/'${IMAGENAME}':'${GITTAG}'",
+              "tags": ["'${GITTAG}'"],
+            }
