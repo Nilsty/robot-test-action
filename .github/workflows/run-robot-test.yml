@@ -27,7 +27,8 @@ jobs:
           export GITTAG=1.1.1 \
           export IMAGENAME=${{ env.IMAGE_NAME }} \
           export REGISTRY=ghcr.io/test \
-          export BRANCH=main \
+          export BRANCH=main
+      - run: |
           echo $BRANCH \
           echo $IMAGENAME
 
