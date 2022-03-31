@@ -36,5 +36,5 @@ jobs:
               "branch": "${{ github.ref }}",
               "commit": "${{ github.sha }}",
               "image": "${{ env.REGISTRY }}/${{ github.event.repository.name }}:${{ env.DUMMY_TAG }}",
-              "tags": ["${{ env.DUMMY_TAG }}"],
+              "tags": ["${{ env.DUMMY_TAG }}"]
             }
