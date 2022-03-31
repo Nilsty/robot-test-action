@@ -21,27 +21,19 @@ env:
 jobs:
   notify-humanitec:
     runs-on: ubuntu-latest
+    env:
+      REGISTRY: ghcr.io/test
     steps:
-      - run: |
-          export GITSHA=1234567 \
-          export GITTAG=1.1.1 \
-          export IMAGENAME=${{ env.IMAGE_NAME }} \
-          export REGISTRY=ghcr.io/test \
-          export BRANCH=main
-      - run: |
-          echo $BRANCH \
-          echo $IMAGENAME
-
       - name: Send Image Notification
         uses: fjogeleit/http-request-action@v1
         with:
-          url: "https://api.humanitec.io/orgs/${{ env.HUMANITEC_ORG }}/images/'${IMAGENAME}'/builds"
+          url: "https://api.humanitec.io/orgs/${{ env.HUMANITEC_ORG }}/images/${{ github.event.repository.name }}/builds"
           method: "POST"
           bearerToken: ${{ env.HUMANITEC_TOKEN }}
           data: |
             {
-              "branch": "'${BRANCH}'",
-              "commit": "'${GITSHA}'",
-              "image": "'${REGISTRY}'/'${IMAGENAME]':'${GITTAG}'",
-              "tags": ["'${GITTAG}'"],
+              "branch": "'${{ github.ref }}'",
+              "commit": "'${{ github.sha }}'",
+              "image": "'${{ env.REGISTRY }}'/'${{ github.event.repository.name }}':'${{ github.ref.name }}'",
+              "tags": ["'${{ github.ref.name }}'"],
             }
