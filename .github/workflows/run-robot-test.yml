@@ -27,7 +27,7 @@ jobs:
       - name: Send Image Notification
         uses: fjogeleit/http-request-action@v1
         with:
-          url: "https://api.humanitec.io/orgs/${{ env.HUMANITEC_ORG }}/images/${{ github.event.repository.name }}/builds"
+          url: "https://api.humanitec.io/orgs/${{ env.HUMANITEC_ORG }}/images/${{ env.IMAGE_NAME }}/builds"
           method: "POST"
           bearerToken: ${{ env.HUMANITEC_TOKEN }}
           data: |
